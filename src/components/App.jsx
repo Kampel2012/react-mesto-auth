@@ -11,7 +11,6 @@ import AddPlacePopup from './AddPlacePopup';
 import Login from './../pages/Login';
 import Register from './../pages/Register';
 import ProtectedRoute from './ProtectedRoute';
-import { AuthContext } from '../contexts/AuthContext';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -40,7 +39,13 @@ function App() {
     checkAuth();
   }, [isAuth]);
 
-  function exitHandle() {
+  function onLogin(token) {
+    localStorage.setItem('TOKEN', token.token);
+    setIsAuth(true);
+    /* navigate('/'); */
+  }
+
+  function onSignOut() {
     localStorage.removeItem('TOKEN');
     setIsAuth(false);
     navigate('/signin');
@@ -132,62 +137,67 @@ function App() {
   }
 
   return (
-    <AuthContext.Provider value={isAuth}>
-      <CurrentUserContext.Provider value={currentUser}>
-        <div className="App page">
-          <Routes>
-            <Route
-              path="/"
-              index
-              element={
-                <ProtectedRoute
-                  element={Main}
-                  onEditProfile={handleEditProfileClick}
-                  onAddPlace={handleAddPlaceClick}
-                  onEditAvatar={handleEditAvatarClick}
-                  onCardClick={handleCardClick}
-                  onCardLike={handleCardLike}
-                  onCardDelete={handleDeleteClick}
-                  cards={cards}
-                  currentUserEmail={currentUserEmail}
-                  exitHandle={exitHandle}
-                />
-              }
-            />
-            <Route path="*" element={<Navigate to="/" />} />
-            <Route path="/signup" element={<Register />} />
-            <Route path="/signin" element={<Login />} />
-          </Routes>
-
-          <EditProfilePopup
-            onUpdateUser={handleUpdateUser}
-            isOpen={isEditProfilePopupOpen}
-            onClose={closeAllPopups}
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="App page">
+        <Routes>
+          <Route
+            path="/signup"
+            element={<Register onLogin={onLogin} isAuth={isAuth} />}
           />
-
-          <EditAvatarPopup
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopups}
-            onUpdateAvatar={handleUpdateAvatar}
+          <Route
+            path="/signin"
+            element={<Login onLogin={onLogin} isAuth={isAuth} />}
           />
-
-          <AddPlacePopup
-            isOpen={isAddPlacePopupOpen}
-            onClose={closeAllPopups}
-            onAddPlace={handleAddPlaceSubmit}
+          <Route
+            path="/"
+            index
+            element={
+              <ProtectedRoute
+                element={Main}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onEditAvatar={handleEditAvatarClick}
+                onCardClick={handleCardClick}
+                onCardLike={handleCardLike}
+                onCardDelete={handleDeleteClick}
+                cards={cards}
+                currentUserEmail={currentUserEmail}
+                onSignOut={onSignOut}
+                isAuth={isAuth}
+              />
+            }
           />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
 
-          <PopupWithForm
-            name="confirm"
-            title="Вы уверены?"
-            buttonText={'Да'}
-            onClose={closeAllPopups}
-            isOpen={false}
-          />
-          <ImagePopup card={selectCard} onClose={closeAllPopups} />
-        </div>
-      </CurrentUserContext.Provider>
-    </AuthContext.Provider>
+        <EditProfilePopup
+          onUpdateUser={handleUpdateUser}
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+        />
+
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
+
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit}
+        />
+
+        <PopupWithForm
+          name="confirm"
+          title="Вы уверены?"
+          buttonText={'Да'}
+          onClose={closeAllPopups}
+          isOpen={false}
+        />
+        <ImagePopup card={selectCard} onClose={closeAllPopups} />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

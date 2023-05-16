@@ -1,14 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './../components/Header';
 import MyForm from '../components/MyForm';
 import { apiAuth } from '../utils/Api';
-import { AuthContext } from '../contexts/AuthContext';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const Login = (props) => {
+const Login = ({ onLogin, isAuth }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/');
+    }
+  }, [isAuth, navigate]);
 
   async function submitHandle(e) {
     e.preventDefault();
@@ -17,18 +23,16 @@ const Login = (props) => {
         email,
         password,
       });
-      localStorage.setItem('TOKEN', token.token);
-      navigate('/');
+      if (token) {
+        onLogin(token);
+      }
     } catch (error) {
       console.warn(error);
     }
   }
 
-  const isAuth = useContext(AuthContext);
-
   return (
     <>
-      {isAuth && <Navigate to="/" />}
       <Header btnText="Регистрация" link="/signup" />
       <div className="myForm__Container">
         <MyForm

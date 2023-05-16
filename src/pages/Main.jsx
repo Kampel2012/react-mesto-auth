@@ -14,7 +14,7 @@ const Main = ({
   onCardDelete,
   cards,
   currentUserEmail,
-  exitHandle,
+  onSignOut,
 }) => {
   const userContext = useContext(CurrentUserContext);
 
@@ -23,7 +23,7 @@ const Main = ({
       <Header
         btnText={`${currentUserEmail}, Выйти`}
         currentUserEmail={currentUserEmail}
-        exitHandle={exitHandle}
+        onSignOut={onSignOut}
       />
       <main>
         <section className="profile">

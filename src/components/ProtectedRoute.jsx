@@ -1,10 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
 
-const ProtectedRoute = ({ element: Component, ...props }) => {
-  const isAuth = useContext(AuthContext);
-
+const ProtectedRoute = ({ element: Component, isAuth, ...props }) => {
   return <>{isAuth ? <Component {...props} /> : <Navigate to="/signin" />}</>;
 };
 

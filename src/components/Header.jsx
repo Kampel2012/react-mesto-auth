@@ -1,7 +1,7 @@
 import headerLogo from '../images/logo.svg';
 import { Link } from 'react-router-dom';
 
-const Header = ({ btnText, link, exitHandle }) => {
+const Header = ({ btnText, link, onSignOut }) => {
   return (
     <header className="header">
       <img className="header__logo" src={headerLogo} alt="Логотип" />
@@ -10,7 +10,7 @@ const Header = ({ btnText, link, exitHandle }) => {
           <Link
             className="header__link"
             to={link || '/signin'}
-            onClick={exitHandle}
+            onClick={onSignOut}
           >
             {btnText}
           </Link>

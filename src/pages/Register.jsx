@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './../components/Header';
 import MyForm from '../components/MyForm';
 import { Link, useNavigate } from 'react-router-dom';
 import { apiAuth } from '../utils/Api';
 
-const Register = (props) => {
+const Register = ({ onLogin, isAuth }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/');
+    }
+  }, [isAuth, navigate]);
 
   async function submitHandle(e) {
     e.preventDefault();
@@ -22,8 +28,7 @@ const Register = (props) => {
             email,
             password,
           });
-          localStorage.setItem('TOKEN', token.token);
-          navigate('/');
+          onLogin(token);
         }, 3000);
       }
     } catch (error) {
