@@ -1,0 +1,15 @@
+.pop-up__field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 72px);
+  margin: 0px 36px 32px 36px; /* 32(25) для ошибок в 2 строчки */
+}
+
+@media screen and (max-width: 680px) {
+  .pop-up__field {
+    margin-left: 22px;
+    margin-right: 22px;
+    width: calc(100% - 44px);
+  }
+}

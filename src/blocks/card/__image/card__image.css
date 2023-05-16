@@ -1,0 +1,30 @@
+.card__image {
+  width: 282px;
+  height: 282px;
+  margin: 0;
+  padding: 0;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  display: block;
+  background-color: #000;
+  color: #fff;
+  font-size: 18px;
+}
+
+.card__image:hover {
+  cursor: pointer;
+  transform: scale(103%);
+}
+
+@media screen and (max-width: 680px) {
+  .card__image {
+    width: 350px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .card__image {
+    width: 100%;
+  }
+}
+

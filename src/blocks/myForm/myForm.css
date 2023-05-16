@@ -1,0 +1,80 @@
+.myForm {
+  box-sizing: border-box;
+  max-width: 362px;
+  margin: 0 auto;
+}
+
+.myForm__title {
+  color: #fff;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29.05px;
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 64px;
+}
+
+.myForm__field {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.myForm__btn {
+  box-sizing: border-box;
+  margin-top: 204px;
+  padding: 0;
+  flex-grow: 1;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 2px;
+  height: 54px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21.78px;
+}
+
+.myForm__btn:hover {
+  opacity: 85%;
+}
+
+.myForm__input {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  flex-grow: 1;
+  width: 100%;
+  background-color: inherit;
+  color: #fff;
+  outline: inherit;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 7px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16.94px;
+}
+
+.myForm__set {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.myForm__text_under {
+  max-width: 362px;
+  margin: 0 auto;
+  text-align: center;
+  color: #fff;
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+}
+
+.myForm__link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.myForm__link:hover {
+  opacity: 60%;
+}

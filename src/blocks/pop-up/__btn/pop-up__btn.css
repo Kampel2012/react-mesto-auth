@@ -1,0 +1,11 @@
+.pop-up__btn {
+  background-color: #000;
+  color: white;
+  text-align: center;
+  border: none;
+}
+
+.pop-up__btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}

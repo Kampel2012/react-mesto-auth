@@ -1,0 +1,5 @@
+.card__wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 21px 20px 21px 21px;
+}

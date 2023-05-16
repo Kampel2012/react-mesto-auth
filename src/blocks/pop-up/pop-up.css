@@ -1,0 +1,20 @@
+.pop-up {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: rgba(000, 000, 000, 0.5);
+  z-index: 2;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+ /* взамен дисплей none */
+  inset: 0;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility .3s ease, opacity .8s ease;
+  /* transition: visibility 0s, opacity 0.5s ease; ---- сет таймаут, чтобы не появлялись поп-апы при загрузке страницы*/
+
+}

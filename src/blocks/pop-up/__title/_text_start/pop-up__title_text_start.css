@@ -1,0 +1,6 @@
+@media screen and (max-width: 680px) {
+  .pop-up__title_text_start {
+    text-align: start;
+    margin-left: 22px;
+  }
+}

@@ -1,0 +1,10 @@
+.profile__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 680px) {
+  .profile__wrapper {
+    display: block;
+  }
+}
