@@ -18,6 +18,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isRegOutcomePopupOpen, setIsRegOutcomePopupOpen] = useState(false);
+
   const [selectCard, setSelectCard] = useState(null);
   const [currentUserEmail, setCurrentUserEmail] = useState('');
   const [currentUser, setCurrentUser] = useState({});
