@@ -21,4 +21,6 @@ const MyForm = ({ onSubmit, name, buttonText, children, title }) => {
   );
 };
 
+//! сделать стили из myForm модульными
+
 export default MyForm;
