@@ -21,19 +21,19 @@ const Register = ({ isAuth, handleRegisterSubmit }) => {
   return (
     <>
       <Header />
-      <div className="myForm__Container">
+      <div className="form__Container">
         <MyForm
           buttonText={'Зарегистрироваться'}
           name={'register'}
           onSubmit={handleSubmit}
           title={'Регистрация'}
         >
-          <label className="myForm__field">
+          <label className="form__field">
             <input
-              className="myForm__input myForm__input_type_name"
+              className="form__input form__input_type_name"
               type="text"
               name="name"
-              id="myForm__input-name"
+              id="form__input-name"
               placeholder="Email"
               required
               minLength="2"
@@ -42,15 +42,15 @@ const Register = ({ isAuth, handleRegisterSubmit }) => {
               value={email || ''}
               autoComplete="off"
             />
-            <span className="myForm__input-error myForm__input-name-error" />
+            <span className="form__input-error form__input-name-error" />
           </label>
-          <label className="myForm__field">
+          <label className="form__field">
             <input
-              className="myForm__input myForm__input_type_password"
+              className="form__input form__input_type_password"
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               name="password"
-              id="myForm__input-password"
+              id="form__input-password"
               placeholder="Пароль"
               required
               minLength="2"
@@ -58,13 +58,13 @@ const Register = ({ isAuth, handleRegisterSubmit }) => {
               value={password || ''}
               autoComplete="off"
             />
-            <span className="myForm__input-error myForm__input-password-error" />
+            <span className="form__input-error form__input-password-error" />
           </label>
         </MyForm>
-        <p className="myForm__text_under">
+        <p className="form__text_under">
           Уже зарегистрированы?{' '}
           {
-            <Link to={'/sign-in'} className="myForm__link">
+            <Link to={'/sign-in'} className="form__link">
               Войти
             </Link>
           }

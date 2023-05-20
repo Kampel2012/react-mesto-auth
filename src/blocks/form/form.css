@@ -1,0 +1,11 @@
+.form {
+  box-sizing: border-box;
+  max-width: 362px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 680px) {
+  .form {
+    padding: 0 30px;
+  }
+}

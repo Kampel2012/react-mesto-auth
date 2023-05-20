@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Main from '../pages/Main';
-import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import { api, apiAuth } from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -12,12 +11,17 @@ import Login from './../pages/Login';
 import Register from './../pages/Register';
 import ProtectedRoute from './ProtectedRoute';
 import PopupRegistrationOutcome from './InfoTooltip/InfoTooltip';
+import ConfirmDelPopup from './ConfirmDelPopup';
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [isRegOutcomePopupOpen, setIsRegOutcomePopupOpen] = useState(false);
+  const [popupsState, setPopupsState] = useState({
+    editProfilePopup: false,
+    addPlacePopup: false,
+    editAvatarPopup: false,
+    regOutcomePopup: false,
+    confirmDelPopup: false,
+    imagePopup: false,
+  });
 
   const [selectCard, setSelectCard] = useState(null);
   const [currentUserEmail, setCurrentUserEmail] = useState('');
@@ -69,26 +73,43 @@ function App() {
   }, []);
 
   function closeAllPopups() {
-    setIsEditProfilePopupOpen(false);
-    setIsAddPlacePopupOpen(false);
-    setIsEditAvatarPopupOpen(false);
-    setIsRegOutcomePopupOpen(false);
+    setPopupsState((prev) => {
+      let obj = { ...prev };
+      for (let prop in obj) {
+        obj[prop] = false;
+      }
+      return obj;
+    });
     setSelectCard(null);
   }
 
+  function handleChangePopupState(popupName) {
+    return () => setPopupsState((prev) => ({ ...prev, [popupName]: true }));
+  }
+
   function handleEditProfileClick() {
-    setIsEditProfilePopupOpen(true);
+    handleChangePopupState('editProfilePopup')();
   }
 
   function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(true);
+    handleChangePopupState('addPlacePopup')();
   }
 
   function handleEditAvatarClick() {
-    setIsEditAvatarPopupOpen(true);
+    handleChangePopupState('editAvatarPopup')();
+  }
+
+  function handleRegisterPopupOpen() {
+    handleChangePopupState('regOutcomePopup')();
+  }
+
+  function handleConfirmDelPopupOpen(card) {
+    setSelectCard(card);
+    handleChangePopupState('confirmDelPopup')();
   }
 
   function handleCardClick(card) {
+    handleChangePopupState('imagePopup')();
     setSelectCard(card);
   }
 
@@ -107,6 +128,7 @@ function App() {
     api
       .deleteCard(id)
       .then(() => setCards((state) => state.filter((item) => item._id !== id)))
+      .then(() => closeAllPopups())
       .catch(console.warn);
   }
 
@@ -138,10 +160,6 @@ function App() {
     } catch (error) {
       console.warn(error);
     }
-  }
-
-  function handleRegisterPopupOpen() {
-    setIsRegOutcomePopupOpen(true);
   }
 
   const handleRegisterSubmit = async (e, email, password) => {
@@ -206,7 +224,7 @@ function App() {
                 onEditAvatar={handleEditAvatarClick}
                 onCardClick={handleCardClick}
                 onCardLike={handleCardLike}
-                onCardDelete={handleDeleteClick}
+                onCardDelete={handleConfirmDelPopupOpen}
                 cards={cards}
                 currentUserEmail={currentUserEmail}
                 onSignOut={onSignOut}
@@ -219,33 +237,37 @@ function App() {
 
         <EditProfilePopup
           onUpdateUser={handleUpdateUser}
-          isOpen={isEditProfilePopupOpen}
+          isOpen={popupsState.editProfilePopup}
           onClose={closeAllPopups}
         />
 
         <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
+          isOpen={popupsState.editAvatarPopup}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
         />
 
         <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
+          isOpen={popupsState.addPlacePopup}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
         />
 
-        <PopupWithForm
-          name="confirm"
-          title="Вы уверены?"
-          buttonText={'Да'}
+        <ConfirmDelPopup
           onClose={closeAllPopups}
-          isOpen={false}
+          isOpen={popupsState.confirmDelPopup}
+          onCardDelete={handleDeleteClick}
+          selectCard={selectCard}
         />
-        <ImagePopup card={selectCard} onClose={closeAllPopups} />
+
+        <ImagePopup
+          card={selectCard}
+          onClose={closeAllPopups}
+          isOpen={popupsState.imagePopup}
+        />
 
         <PopupRegistrationOutcome
-          isOpen={isRegOutcomePopupOpen}
+          isOpen={popupsState.regOutcomePopup}
           onClose={closeAllPopups}
         />
       </div>

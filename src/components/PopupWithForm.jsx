@@ -27,7 +27,6 @@ const PopupWithForm = ({
           onSubmit={onSubmit}
           className={`pop-up__form pop-up__form_data_${name}`}
           name={`pop-up-form-${name}`} // на будущие корректировки, было pop-up-form-profile-edit и name="pop-up__form_data_cards"
-          /* noValidate */
           autoComplete="off"
         >
           <fieldset className="pop-up__set">

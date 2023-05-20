@@ -1,13 +1,13 @@
 import React from 'react';
 import usePopupClose from '../hooks/usePopupClose';
 
-const ImagePopup = ({ card, onClose }) => {
-  const classes = `pop-up pop-up_data_image-card ${card && 'pop-up_opened'}`;
+const ImagePopup = ({ card, onClose, isOpen }) => {
+  const classes = `pop-up pop-up_data_image-card ${isOpen && 'pop-up_opened'}`;
   usePopupClose(card, onClose);
 
   return (
     <div className={classes}>
-      {card && (
+      {isOpen && (
         <div className="pop-up__container pop-up__container_data_image-card">
           <button
             onClick={onClose}

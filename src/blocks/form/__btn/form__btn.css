@@ -1,0 +1,17 @@
+.form__btn {
+  box-sizing: border-box;
+  margin-top: 204px;
+  padding: 0;
+  flex-grow: 1;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 2px;
+  height: 54px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21.78px;
+}
+
+.form__btn:hover {
+  opacity: 85%;
+}

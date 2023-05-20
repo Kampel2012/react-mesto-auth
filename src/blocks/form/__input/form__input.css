@@ -1,0 +1,15 @@
+.form__input {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  flex-grow: 1;
+  width: 100%;
+  background-color: inherit;
+  color: #fff;
+  outline: inherit;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 7px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16.94px;
+}

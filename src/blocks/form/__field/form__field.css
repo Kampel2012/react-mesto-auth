@@ -1,0 +1,4 @@
+.form__field {
+  display: flex;
+  flex-wrap: wrap;
+}

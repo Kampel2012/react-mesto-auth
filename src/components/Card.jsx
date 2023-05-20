@@ -12,7 +12,7 @@ const Card = ({
   onCardDelete,
 }) => {
   function handleClick() {
-    onCardClick({ link, name });
+    onCardClick({ link, name, _id });
   }
 
   const user = useContext(CurrentUserContext);
