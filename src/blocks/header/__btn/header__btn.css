@@ -1,3 +1,10 @@
 .header__btn {
   margin-top: 7px;
+  color: white;
+}
+
+@media screen and (max-width: 920px) {
+  .header__btn {
+    margin-right: 30px;
+  }
 }

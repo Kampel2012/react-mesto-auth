@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Header from './../components/Header';
 import MyForm from '../components/MyForm';
 import { Link, useNavigate } from 'react-router-dom';
-import { apiAuth } from '../utils/Api';
 
-const Register = ({ onLogin, isAuth }) => {
+const Register = ({ isAuth, handleRegisterSubmit }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -15,35 +14,18 @@ const Register = ({ onLogin, isAuth }) => {
     }
   }, [isAuth, navigate]);
 
-  async function submitHandle(e) {
-    e.preventDefault();
-    try {
-      const res = await apiAuth.singup({
-        email,
-        password,
-      });
-      if (res.data) {
-        setTimeout(async () => {
-          const token = await apiAuth.singin({
-            email,
-            password,
-          });
-          onLogin(token);
-        }, 3000);
-      }
-    } catch (error) {
-      console.warn(error);
-    }
+  function handleSubmit(e) {
+    handleRegisterSubmit(e, email, password);
   }
 
   return (
     <>
-      <Header btnText="Войти" link="/signin" />
+      <Header />
       <div className="myForm__Container">
         <MyForm
           buttonText={'Зарегистрироваться'}
           name={'register'}
-          onSubmit={submitHandle}
+          onSubmit={handleSubmit}
           title={'Регистрация'}
         >
           <label className="myForm__field">

@@ -9,12 +9,9 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
- /* взамен дисплей none */
   inset: 0;
   display: flex;
   visibility: hidden;
   opacity: 0;
-  transition: visibility .3s ease, opacity .8s ease;
-  /* transition: visibility 0s, opacity 0.5s ease; ---- сет таймаут, чтобы не появлялись поп-апы при загрузке страницы*/
-
+  transition: visibility 0.3s ease, opacity 0.8s ease;
 }

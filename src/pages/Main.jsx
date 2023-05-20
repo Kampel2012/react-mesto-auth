@@ -15,15 +15,16 @@ const Main = ({
   cards,
   currentUserEmail,
   onSignOut,
+  isAuth,
 }) => {
   const userContext = useContext(CurrentUserContext);
 
   return (
     <>
       <Header
-        btnText={`${currentUserEmail}, Выйти`}
         currentUserEmail={currentUserEmail}
         onSignOut={onSignOut}
+        isAuth={isAuth}
       />
       <main>
         <section className="profile">

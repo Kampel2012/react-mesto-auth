@@ -71,7 +71,7 @@ class Api {
     });
   }
 
-  singup({ email, password }) {
+  signup({ email, password }) {
     return this._request(`${this.baseUrl}/signup`, {
       method: 'POST',
       headers: this.headers,
@@ -82,7 +82,7 @@ class Api {
     });
   }
 
-  singin({ email, password }) {
+  signin({ email, password }) {
     return this._request(`${this.baseUrl}/signin`, {
       method: 'POST',
       headers: this.headers,

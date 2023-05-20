@@ -4,6 +4,12 @@
   margin: 0 auto;
 }
 
+@media screen and (max-width: 680px) {
+  .myForm {
+    padding: 0 30px;
+  }
+}
+
 .myForm__title {
   color: #fff;
   font-weight: 900;

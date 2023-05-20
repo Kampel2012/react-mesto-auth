@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Header from './../components/Header';
 import MyForm from '../components/MyForm';
-import { apiAuth } from '../utils/Api';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ onLogin, isAuth }) => {
+const Login = ({ handleLoginSubmit, isAuth }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,23 +15,12 @@ const Login = ({ onLogin, isAuth }) => {
   }, [isAuth, navigate]);
 
   async function submitHandle(e) {
-    e.preventDefault();
-    try {
-      const token = await apiAuth.singin({
-        email,
-        password,
-      });
-      if (token) {
-        onLogin(token);
-      }
-    } catch (error) {
-      console.warn(error);
-    }
+    handleLoginSubmit(e, email, password);
   }
 
   return (
     <>
-      <Header btnText="Регистрация" link="/signup" />
+      <Header />
       <div className="myForm__Container">
         <MyForm
           buttonText={'Войти'}

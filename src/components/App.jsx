@@ -11,11 +11,13 @@ import AddPlacePopup from './AddPlacePopup';
 import Login from './../pages/Login';
 import Register from './../pages/Register';
 import ProtectedRoute from './ProtectedRoute';
+import PopupRegistrationOutcome from './InfoTooltip/InfoTooltip';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isRegOutcomePopupOpen, setIsRegOutcomePopupOpen] = useState(false);
   const [selectCard, setSelectCard] = useState(null);
   const [currentUserEmail, setCurrentUserEmail] = useState('');
   const [currentUser, setCurrentUser] = useState({});
@@ -25,6 +27,7 @@ function App() {
 
   useEffect(() => {
     async function checkAuth() {
+      if (!localStorage.getItem('TOKEN')) return;
       try {
         const res = await apiAuth.checkToken(localStorage.getItem('TOKEN'));
         if (res.data) {
@@ -42,7 +45,6 @@ function App() {
   function onLogin(token) {
     localStorage.setItem('TOKEN', token.token);
     setIsAuth(true);
-    /* navigate('/'); */
   }
 
   function onSignOut() {
@@ -69,6 +71,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsRegOutcomePopupOpen(false);
     setSelectCard(null);
   }
 
@@ -136,17 +139,60 @@ function App() {
     }
   }
 
+  function handleRegisterPopupOpen() {
+    setIsRegOutcomePopupOpen(true);
+  }
+
+  const handleRegisterSubmit = async (e, email, password) => {
+    e.preventDefault();
+    try {
+      const res = await apiAuth.signup({
+        email,
+        password,
+      });
+      handleRegisterPopupOpen();
+      if (res.data) {
+        navigate('/signin');
+      }
+    } catch (error) {
+      handleRegisterPopupOpen();
+      console.warn(error);
+    }
+  };
+
+  const handleLoginSubmit = async (e, email, password) => {
+    e.preventDefault();
+    try {
+      const token = await apiAuth.signin({
+        email,
+        password,
+      });
+      if (token) {
+        onLogin(token);
+      }
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App page">
         <Routes>
           <Route
             path="/signup"
-            element={<Register onLogin={onLogin} isAuth={isAuth} />}
+            element={
+              <Register
+                isAuth={isAuth}
+                handleRegisterSubmit={handleRegisterSubmit}
+              />
+            }
           />
           <Route
             path="/signin"
-            element={<Login onLogin={onLogin} isAuth={isAuth} />}
+            element={
+              <Login isAuth={isAuth} handleLoginSubmit={handleLoginSubmit} />
+            }
           />
           <Route
             path="/"
@@ -196,6 +242,11 @@ function App() {
           isOpen={false}
         />
         <ImagePopup card={selectCard} onClose={closeAllPopups} />
+
+        <PopupRegistrationOutcome
+          isOpen={isRegOutcomePopupOpen}
+          onClose={closeAllPopups}
+        />
       </div>
     </CurrentUserContext.Provider>
   );
