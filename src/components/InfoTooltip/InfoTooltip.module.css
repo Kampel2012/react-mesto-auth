@@ -96,7 +96,7 @@
 }
 
 @media screen and (max-width: 680px) {
-  .pop-close__btn {
+  .close__btn {
     background-size: 20px 20px;
     top: -36px;
     right: 0;
