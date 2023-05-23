@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from './../components/Header';
-import MyForm from '../components/MyForm';
+import MyForm from '../components/UI/MyForm';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Register = ({ isAuth, handleRegisterSubmit }) => {
@@ -18,6 +18,14 @@ const Register = ({ isAuth, handleRegisterSubmit }) => {
     handleRegisterSubmit(e, email, password);
   }
 
+  function onChangeEmail(e) {
+    setEmail(e.target.value);
+  }
+
+  function onChangePassword(e) {
+    setPassword(e.target.value);
+  }
+
   return (
     <>
       <Header />
@@ -30,27 +38,27 @@ const Register = ({ isAuth, handleRegisterSubmit }) => {
         >
           <label className="form__field">
             <input
-              className="form__input form__input_type_name"
+              className="form__input form__input_type_email"
               type="text"
-              name="name"
-              id="form__input-name"
+              name="email"
+              id="form-register__input-email"
               placeholder="Email"
               required
               minLength="2"
               maxLength="40"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={onChangeEmail}
               value={email || ''}
               autoComplete="off"
             />
-            <span className="form__input-error form__input-name-error" />
+            <span className="form__input-error form__input-email-error" />
           </label>
           <label className="form__field">
             <input
               className="form__input form__input_type_password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={onChangePassword}
               type="password"
               name="password"
-              id="form__input-password"
+              id="form-register__input-password"
               placeholder="Пароль"
               required
               minLength="2"

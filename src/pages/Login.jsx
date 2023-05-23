@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './../components/Header';
-import MyForm from '../components/MyForm';
+import MyForm from '../components/UI/MyForm';
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({ handleLoginSubmit, isAuth }) => {
@@ -18,6 +18,14 @@ const Login = ({ handleLoginSubmit, isAuth }) => {
     handleLoginSubmit(e, email, password);
   }
 
+  function onChangeEmail(e) {
+    setEmail(e.target.value);
+  }
+
+  function onChangePassword(e) {
+    setPassword(e.target.value);
+  }
+
   return (
     <>
       <Header />
@@ -33,12 +41,12 @@ const Login = ({ handleLoginSubmit, isAuth }) => {
               className="form__input form__input_type_name"
               type="text"
               name="name"
-              id="form__input-name"
+              id="form-login__input-name"
               placeholder="Email"
               required
               minLength="2"
               maxLength="40"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={onChangeEmail}
               value={email || ''}
               autoComplete="off"
             />
@@ -47,7 +55,7 @@ const Login = ({ handleLoginSubmit, isAuth }) => {
           <label className="form__field">
             <input
               className="form__input form__input_type_password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={onChangePassword}
               type="password"
               name="password"
               id="form__input-password"

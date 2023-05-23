@@ -29,5 +29,3 @@ export default function usePopupClose(isOpen, closePopup) {
     };
   }, [isOpen, closePopup]);
 }
-
-// thanks a lot =)
