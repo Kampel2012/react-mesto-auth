@@ -1,19 +1,15 @@
 import React from 'react';
 import usePopupClose from '../../hooks/usePopupClose';
 import styles from './InfoTooltip.module.css';
-import { useLocation } from 'react-router-dom';
 
-const PopupRegistrationOutcome = ({ isOpen, onClose }) => {
+const PopupRegistrationOutcome = ({ isOpen, onClose, isCompleted }) => {
   usePopupClose(isOpen, onClose);
-  let isSuccess = false;
-  const location = useLocation();
-  if (location.pathname === '/signin') isSuccess = true;
   const classesPopup = [styles.popup, isOpen && styles.popup_opened].join(' ');
   const classesIcon = [
     styles.icon,
-    isSuccess ? styles.icon__success : styles.icon__error,
+    isCompleted ? styles.icon__success : styles.icon__error,
   ].join(' ');
-  const text = isSuccess
+  const text = isCompleted
     ? 'Вы успешно зарегистрировались!'
     : 'Что-то пошло не так! Попробуйте ещё раз.';
 

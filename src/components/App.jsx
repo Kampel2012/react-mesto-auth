@@ -10,7 +10,7 @@ import AddPlacePopup from './AddPlacePopup';
 import Login from './../pages/Login';
 import Register from './../pages/Register';
 import ProtectedRoute from './ProtectedRoute';
-import PopupRegistrationOutcome from './InfoTooltip/InfoTooltip';
+import InfoTooltip from './InfoTooltip/InfoTooltip';
 import ConfirmDelPopup from './ConfirmDelPopup';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
     addPlacePopup: false,
     editAvatarPopup: false,
     regOutcomePopup: false,
-    confirmDelPopup: false,
+    infoTooltip: false,
     imagePopup: false,
   });
 
@@ -28,6 +28,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -99,8 +100,9 @@ function App() {
     handleChangePopupState('editAvatarPopup')();
   }
 
-  function handleRegisterPopupOpen() {
-    handleChangePopupState('regOutcomePopup')();
+  function handleInfoTooltipOpen(isCompleted) {
+    handleChangePopupState('infoTooltip')();
+    setIsCompleted(isCompleted);
   }
 
   function handleConfirmDelPopupOpen(card) {
@@ -121,7 +123,10 @@ function App() {
       .then((newCard) => {
         setCards((state) => state.map((c) => (c._id === _id ? newCard : c)));
       })
-      .catch(console.warn);
+      .catch((error) => {
+        console.warn(error);
+        handleInfoTooltipOpen(false);
+      });
   }
 
   function handleDeleteClick(id) {
@@ -129,7 +134,10 @@ function App() {
       .deleteCard(id)
       .then(() => setCards((state) => state.filter((item) => item._id !== id)))
       .then(() => closeAllPopups())
-      .catch(console.warn);
+      .catch((error) => {
+        console.warn(error);
+        handleInfoTooltipOpen(false);
+      });
   }
 
   async function handleUpdateUser(userData) {
@@ -139,6 +147,7 @@ function App() {
       closeAllPopups();
     } catch (error) {
       console.warn(error);
+      handleInfoTooltipOpen(false);
     }
   }
 
@@ -149,6 +158,7 @@ function App() {
       closeAllPopups();
     } catch (error) {
       console.warn(error);
+      handleInfoTooltipOpen(false);
     }
   }
 
@@ -159,6 +169,7 @@ function App() {
       closeAllPopups();
     } catch (error) {
       console.warn(error);
+      handleInfoTooltipOpen(false);
     }
   }
 
@@ -169,13 +180,13 @@ function App() {
         email,
         password,
       });
-      handleRegisterPopupOpen();
+      handleInfoTooltipOpen(true);
       if (res.data) {
         navigate('/signin');
       }
     } catch (error) {
-      handleRegisterPopupOpen();
       console.warn(error);
+      handleInfoTooltipOpen(false);
     }
   };
 
@@ -191,6 +202,7 @@ function App() {
       }
     } catch (error) {
       console.warn(error);
+      handleInfoTooltipOpen(false);
     }
   };
 
@@ -266,8 +278,9 @@ function App() {
           isOpen={popupsState.imagePopup}
         />
 
-        <PopupRegistrationOutcome
-          isOpen={popupsState.regOutcomePopup}
+        <InfoTooltip
+          isOpen={popupsState.infoTooltip}
+          isCompleted={isCompleted}
           onClose={closeAllPopups}
         />
       </div>
