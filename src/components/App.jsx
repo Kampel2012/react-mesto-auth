@@ -42,21 +42,22 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function checkAuth() {
-      if (!localStorage.getItem('TOKEN')) return;
-      try {
-        const res = await apiAuth.checkToken(localStorage.getItem('TOKEN'));
-        if (res.data) {
-          setCurrentUserEmail(res.data.email);
-          setIsAuth(true);
-        }
-      } catch (error) {
-        setIsAuth(false);
-        console.warn(error);
-      }
-    }
     checkAuth();
-  }, [isAuth]);
+  }, []);
+
+  async function checkAuth() {
+    if (!localStorage.getItem('TOKEN')) return;
+    try {
+      const res = await apiAuth.checkToken(localStorage.getItem('TOKEN'));
+      if (res.data) {
+        setCurrentUserEmail(res.data.email);
+        setIsAuth(true);
+      }
+    } catch (error) {
+      setIsAuth(false);
+      console.warn(error);
+    }
+  }
 
   function onLogin(token) {
     localStorage.setItem('TOKEN', token.token);
