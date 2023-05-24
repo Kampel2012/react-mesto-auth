@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Main from '../pages/Main';
 import ImagePopup from './ImagePopup';
-import { api, apiAuth } from '../utils/Api';
+import { api } from '../utils/Api';
+import { apiAuth } from '../utils/ApiAuth';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
@@ -28,7 +29,16 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(null);
+
+  const INIT_INFO_TOOLTIP = {
+    success: 'Успешно!',
+    error: 'Что-то пошло не так! Попробуйте ещё раз.',
+  };
+
+  const [infoTooltipMessage, setInfoTooltipMessage] =
+    useState(INIT_INFO_TOOLTIP);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,7 +70,8 @@ function App() {
   }
 
   useEffect(() => {
-    async function getUser() {
+    if (!isAuth) return;
+    (async function getUserAndCardsData() {
       try {
         const user = await api.getUserInfoData();
         setCurrentUser(user);
@@ -69,19 +80,21 @@ function App() {
       } catch (error) {
         console.warn(error);
       }
-    }
-    getUser();
-  }, []);
+    })();
+  }, [isAuth]);
 
   function closeAllPopups() {
     setPopupsState((prev) => {
-      let obj = { ...prev };
+      const obj = { ...prev };
       for (let prop in obj) {
         obj[prop] = false;
       }
       return obj;
     });
     setSelectCard(null);
+    setTimeout(() => {
+      setInfoTooltipMessage(INIT_INFO_TOOLTIP); // ? есть опасити дюрейшн и он меняет стейт до окончания анимации
+    }, 600);
   }
 
   function handleChangePopupState(popupName) {
@@ -181,6 +194,9 @@ function App() {
         password,
       });
       handleInfoTooltipOpen(true);
+      setInfoTooltipMessage((prev) => {
+        return { ...prev, success: 'Вы успешно зарегистрировались!' };
+      });
       if (res.data) {
         navigate('/signin');
       }
@@ -282,6 +298,7 @@ function App() {
           isOpen={popupsState.infoTooltip}
           isCompleted={isCompleted}
           onClose={closeAllPopups}
+          infoTooltipMessage={infoTooltipMessage}
         />
       </div>
     </CurrentUserContext.Provider>

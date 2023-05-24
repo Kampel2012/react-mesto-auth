@@ -13,12 +13,46 @@
   display: flex;
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0.3s ease, opacity 0.8s ease;
+  /* transition: visibility 0.3s ease, opacity 0.8s ease; */
+  /* Свойства анимации */
+}
+
+@keyframes popupShow {
+  from {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 .popup_opened {
-  opacity: 1;
-  visibility: visible;
+  animation-name: popupShow;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes popupHidden {
+  from {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.popup_closed {
+  animation-name: popupHidden;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
 }
 
 .icon {

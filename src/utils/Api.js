@@ -71,34 +71,6 @@ class Api {
     });
   }
 
-  signup({ email, password }) {
-    return this._request(`${this.baseUrl}/signup`, {
-      method: 'POST',
-      headers: this.headers,
-      body: JSON.stringify({
-        password: password,
-        email: email,
-      }),
-    });
-  }
-
-  signin({ email, password }) {
-    return this._request(`${this.baseUrl}/signin`, {
-      method: 'POST',
-      headers: this.headers,
-      body: JSON.stringify({
-        password: password,
-        email: email,
-      }),
-    });
-  }
-
-  checkToken(token) {
-    return this._request(`${this.baseUrl}/users/me`, {
-      headers: { ...this.headers, Authorization: `Bearer ${token}` },
-    });
-  }
-
   // другие методы работы с API
 }
 
@@ -106,13 +78,6 @@ export const api = new Api({
   baseUrl: `https://mesto.nomoreparties.co/v1/cohort-63`,
   headers: {
     authorization: '2f3491e1-4e2a-4578-a239-f8abfd519bd8',
-    'Content-Type': 'application/json',
-  },
-});
-
-export const apiAuth = new Api({
-  baseUrl: `https://auth.nomoreparties.co`,
-  headers: {
     'Content-Type': 'application/json',
   },
 });
