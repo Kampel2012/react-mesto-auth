@@ -2,19 +2,31 @@ import React from 'react';
 import usePopupClose from '../../hooks/usePopupClose';
 import styles from './InfoTooltip.module.css';
 
-const PopupRegistrationOutcome = ({ isOpen, onClose, isCompleted }) => {
+const InfoTooltip = ({ isOpen, onClose, isCompleted, infoTooltipMessage }) => {
   usePopupClose(isOpen, onClose);
-  const classesPopup = [styles.popup, isOpen && styles.popup_opened].join(' ');
+  const classesPopup = [
+    styles.popup,
+    isCompleted !== null &&
+      (isOpen ? styles.popup_opened : styles.popup_closed),
+  ].join(' ');
+
   const classesIcon = [
     styles.icon,
     isCompleted ? styles.icon__success : styles.icon__error,
   ].join(' ');
+
   const text = isCompleted
-    ? 'Вы успешно зарегистрировались!'
-    : 'Что-то пошло не так! Попробуйте ещё раз.';
+    ? infoTooltipMessage.success || 'Успешно!'
+    : infoTooltipMessage.error || 'Что-то пошло не так! Попробуйте ещё раз.';
+
+  const handleAnimationEnd = (e) => {
+    if (e.target.classList.contains(styles.popup)) {
+      console.log('Animation ended');
+    }
+  };
 
   return (
-    <div className={classesPopup}>
+    <div className={classesPopup} onAnimationEnd={handleAnimationEnd}>
       <div className={styles.container}>
         <div className={classesIcon}></div>
         <h2 className={styles.title}>{text}</h2>
@@ -29,4 +41,4 @@ const PopupRegistrationOutcome = ({ isOpen, onClose, isCompleted }) => {
   );
 };
 
-export default PopupRegistrationOutcome;
+export default InfoTooltip;
