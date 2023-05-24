@@ -94,7 +94,7 @@ function App() {
     });
     setSelectCard(null);
     setTimeout(() => {
-      setInfoTooltipMessage(INIT_INFO_TOOLTIP); // ? есть опасити дюрейшн и он меняет стейт до окончания анимации
+      setInfoTooltipMessage(INIT_INFO_TOOLTIP); // ждем окончание анимации
     }, 600);
   }
 
