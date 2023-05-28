@@ -43,7 +43,7 @@ function App() {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [isAuth]);
 
   async function checkAuth() {
     if (!localStorage.getItem('TOKEN')) return;
